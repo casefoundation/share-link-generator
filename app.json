@@ -1,0 +1,17 @@
+{
+  "name": "share-link-generator",
+  "description": "This tool helps you build share URLs for various social networks.",
+  "repository": "https://github.com/casefoundation/share-link-generator",
+  "image": "heroku/nodejs",
+  "env": {
+    "DEFAULT_TWITTER_SHARE_TEXT_TEMPLATE": {
+      "value": "Check out {{ title }} by {{author}}! {{ url }}"
+    },
+    "DEFAULT_EMAIL_SUBJECT_TEXT_TEMPLATE": {
+      "value": "{{ title}} by {{ author }}"
+    },
+    "DEFAULT_EMAIL_BODY_TEXT_TEMPLATE": {
+      "value": "I thought you might enjoyt this article: {{ url }}"
+    }
+  }
+}
