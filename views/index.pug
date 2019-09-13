@@ -1,0 +1,89 @@
+html
+  head
+    title Share Link Generator
+    link(
+      rel='stylesheet'
+      href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'
+    )
+  body
+    div(class='container')
+      h1 Share Link Generator
+      div(class='row')
+        div(class='col')
+          div(class='alert alert-primary') This tool helps you build share URLs for various social networks. For Twitter and Email you may also use scraped metadata from those URLs to prepopulate the share text. To use scraped terms like the title, publisher, URL, or author from a URL, surround them in double squiggly brackets like this: {{ }}. For example, you may use this text for Twitter: "Check out {{ title }} by {{author}}! {{ url }}"
+          form(
+            method='post'
+          )
+            fieldset
+              legend URL
+              div(class='form-group')
+                label(for='url') URL
+                input(
+                  name='url'
+                  id='url'
+                  value=url
+                  type='text'
+                  class='form-control'
+                  required
+                )
+            fieldset
+              legend Share Text
+              each network in text
+                div(class='form-group')
+                  label(for=network.name)= network.network
+                  input(
+                    name=network.name
+                    id=network.name
+                    value=network.text
+                    type='text'
+                    class='form-control'
+                  )
+            button(
+              type='submit'
+              class='btn btn-primary'
+            ) Generate!
+      if metadata.length > 0 && links.length > 0 && generatedText.length > 0
+        div(class='row')
+          div(class='col')
+            div(class='card')
+              div(class='card-body')
+                fieldset
+                  legend Metadata
+                  each value in metadata
+                    div(class='form-group')
+                      label= value.key
+                      textarea(
+                        class='form-control'
+                        readonly
+                        onClick='this.select();'
+                        rows=4
+                      )= value.value
+          div(class='col')
+            div(class='card')
+              div(class='card-body')
+                fieldset
+                  legend Generated Text
+                  each network in generatedText
+                    div(class='form-group')
+                      label= network.network
+                      textarea(
+                        class='form-control'
+                        readonly
+                        onClick='this.select();'
+                        rows=4
+                      )= network.text
+          div(class='col')
+            div(class='card')
+              div(class='card-body')
+                fieldset
+                  legend Links
+                  each network in links
+                    div(class='form-group')
+                      label= network.network
+                      input(
+                        value=network.link
+                        type='text'
+                        class='form-control'
+                        readonly
+                        onClick='this.select();'
+                      )
