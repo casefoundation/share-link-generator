@@ -8,12 +8,12 @@ html
   body
     div(class='container')
       h1 Share Link Generator
-      div(class='row')
-        div(class='col')
-          div(class='alert alert-primary') This tool helps you build share URLs for various social networks. For Twitter and Email you may also use scraped metadata from those URLs to prepopulate the share text. To use scraped terms like the title, publisher, URL, or author from a URL, surround them in double squiggly brackets like this: {{ }}. For example, you may use this text for Twitter: "Check out {{ title }} by {{author}}! {{ url }}"
-          form(
-            method='post'
-          )
+      form(
+        method='post'
+      )
+        div(class='row')
+          div(class='col')
+            div(class='alert alert-primary') This tool helps you build share URLs for various social networks. For Twitter and Email you may also use scraped metadata from those URLs to prepopulate the share text. To use scraped terms like the title, publisher, URL, or author from a URL, surround them in double squiggly brackets like this: {{ }}. For example, you may use this text for Twitter: "Check out {{ title }} by {{author}}! {{ url }}"
             fieldset
               legend URL
               div(class='form-group')
@@ -42,48 +42,56 @@ html
               type='submit'
               class='btn btn-primary'
             ) Generate!
-      if metadata.length > 0 && links.length > 0 && generatedText.length > 0
-        div(class='row')
-          div(class='col')
+        if metadata.length > 0 && links.length > 0 && generatedText.length > 0
+          input(type='hidden' name='custom_metadata' value='yes')
+          div(class='clearfix')
             div(class='card')
               div(class='card-body')
                 fieldset
                   legend Metadata
-                  each value in metadata
-                    div(class='form-group')
-                      label= value.key
-                      textarea(
-                        class='form-control'
-                        readonly
-                        onClick='this.select();'
-                        rows=4
-                      )= value.value
-          div(class='col')
-            div(class='card')
-              div(class='card-body')
-                fieldset
-                  legend Generated Text
-                  each network in generatedText
-                    div(class='form-group')
-                      label= network.network
-                      textarea(
-                        class='form-control'
-                        readonly
-                        onClick='this.select();'
-                        rows=4
-                      )= network.text
-          div(class='col')
-            div(class='card')
-              div(class='card-body')
-                fieldset
-                  legend Links
-                  each network in links
-                    div(class='form-group')
-                      label= network.network
-                      input(
-                        value=network.link
-                        type='text'
-                        class='form-control'
-                        readonly
-                        onClick='this.select();'
-                      )
+                  div(class='row')
+                    each value in metadata
+                      div(class='col')
+                        div(class='form-group')
+                          label= value.key
+                          textarea(
+                            class='form-control'
+                            name='meta_'+value.key
+                            onClick='this.select();'
+                            rows=4
+                          )= value.value
+                div(class='clearfix')
+                  button(
+                    type='submit'
+                    class='btn btn-secondary'
+                  ) Update
+          div(class='row')
+            div(class='col')
+              div(class='card')
+                div(class='card-body')
+                  fieldset
+                    legend Generated Text
+                    each network in generatedText
+                      div(class='form-group')
+                        label= network.network
+                        textarea(
+                          class='form-control'
+                          readonly
+                          onClick='this.select();'
+                          rows=4
+                        )= network.text
+            div(class='col')
+              div(class='card')
+                div(class='card-body')
+                  fieldset
+                    legend Links
+                    each network in links
+                      div(class='form-group')
+                        label= network.network
+                        input(
+                          value=network.link
+                          type='text'
+                          class='form-control'
+                          readonly
+                          onClick='this.select();'
+                        )
